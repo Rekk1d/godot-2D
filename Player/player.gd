@@ -52,9 +52,8 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
-func play_anim(name: String):
-	if animationPlayer.current_animation != name:
-		animationPlayer.play(name)
+func play_anim(name: String): 
+	animationPlayer.play(name)
 
 func move_state():
 	var direction:= Input.get_axis("left", "right")
@@ -99,7 +98,6 @@ func block_state():
 		
 func slide_state():
 	play_anim('Slide')
-	#await animationPlayer.animation_finished
 	await get_tree().create_timer(slide_cooldown).timeout
 	is_slide_available = true
 	state = MOVE
@@ -125,9 +123,14 @@ func attack3_state():
 	await animationPlayer.animation_finished
 	state = MOVE
 	
+func combo_attack():
+	combo = true
+	await animation.animation_finished
+	combo = false
+	
 func attack_freeze():
 	attack_cooldown = true
-	get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(0.5).timeout
 	attack_cooldown = false
 	
 func die():

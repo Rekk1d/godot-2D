@@ -660,7 +660,7 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
-"method": &"combo1"
+"method": &"combo_attack"
 }]
 }
 
@@ -701,7 +701,7 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
-"method": &"combo1"
+"method": &"combo_attack"
 }]
 }
 
