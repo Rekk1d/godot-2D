@@ -1,9 +1,10 @@
-[gd_scene load_steps=99 format=3 uid="uid://khw4b1n7a3p4"]
+[gd_scene load_steps=101 format=3 uid="uid://khw4b1n7a3p4"]
 
 [ext_resource type="Script" uid="uid://dg5t8d13dbu8q" path="res://Player/player.gd" id="1_2e7ox"]
 [ext_resource type="Texture2D" uid="uid://c5db50b3660nc" path="res://oak_woods_v1.0/character/char_blue.png" id="1_m50tt"]
 [ext_resource type="Texture2D" uid="uid://cy4qiq61uv5wa" path="res://oak_woods_v1.0/character/char_blue_1.png" id="2_iprji"]
 [ext_resource type="Texture2D" uid="uid://e150sl6q0gmh" path="res://oak_woods_v1.0/character/char_blue_2.png" id="3_426jg"]
+[ext_resource type="Texture2D" uid="uid://d3c3pecqmwr7y" path="res://oak_woods_v1.0/decorations/circle.png" id="5_k53q1"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1bi74"]
 
@@ -995,6 +996,9 @@ _data = {
 &"Walk": SubResource("Animation_dkpta")
 }
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_k53q1"]
+polygon = PackedVector2Array(-116.66665, 200.00002, 150.00002, 200.00002, 150.00002, 246.15385, -133.33331, 246.15385)
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_2e7ox")
 
@@ -1022,3 +1026,12 @@ drag_horizontal_enabled = true
 libraries = {
 &"": SubResource("AnimationLibrary_lfmf2")
 }
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(-7.1525574e-07, -1.0000005)
+scale = Vector2(0.060000006, 0.065000005)
+energy = 0.2
+texture = ExtResource("5_k53q1")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="PointLight2D"]
+occluder = SubResource("OccluderPolygon2D_k53q1")

@@ -1,11 +1,13 @@
-[gd_scene load_steps=12 format=4 uid="uid://c22p8qbiacnqq"]
+[gd_scene load_steps=15 format=4 uid="uid://c22p8qbiacnqq"]
 
+[ext_resource type="Script" uid="uid://cu4iamwrsqtly" path="res://level.gd" id="1_n6hdu"]
 [ext_resource type="PackedScene" uid="uid://khw4b1n7a3p4" path="res://Player/player.tscn" id="1_u52ul"]
 [ext_resource type="Texture2D" uid="uid://hsyghu7chl4q" path="res://oak_woods_v1.0/background/background_layer_1.png" id="2_0b4ue"]
 [ext_resource type="Texture2D" uid="uid://cak0j0r246ksp" path="res://oak_woods_v1.0/background/background_layer_2.png" id="3_f2txt"]
 [ext_resource type="Texture2D" uid="uid://ctcxgtjljumri" path="res://oak_woods_v1.0/background/background_layer_3.png" id="4_1ainy"]
 [ext_resource type="PackedScene" uid="uid://rjbi5f7viwwb" path="res://Buildings/shop.tscn" id="5_1ainy"]
 [ext_resource type="Texture2D" uid="uid://nb14ahspefuv" path="res://oak_woods_v1.0/oak_woods_tileset.png" id="5_f2txt"]
+[ext_resource type="Texture2D" uid="uid://d3c3pecqmwr7y" path="res://oak_woods_v1.0/decorations/circle.png" id="8_km5ld"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1ainy"]
 texture = ExtResource("5_f2txt")
@@ -484,7 +486,11 @@ var currentGold = 0;
 	
 "
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_km5ld"]
+polygon = PackedVector2Array(-5519, 599, -5520, 688, 5104, 687, 5104, 599)
+
 [node name="Level" type="Node2D"]
+script = ExtResource("1_n6hdu")
 
 [node name="Bg" type="Node2D" parent="."]
 position = Vector2(1153, 0)
@@ -558,4 +564,24 @@ script = SubResource("GDScript_km5ld")
 wait_time = 3.0
 autostart = true
 
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+energy = 0.9
+blend_mode = 1
+
+[node name="ChangeTimeOfDay" type="Timer" parent="."]
+wait_time = 20.0
+autostart = true
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(288, 557.00006)
+scale = Vector2(0.3449805, 0.19351561)
+color = Color(0.91764706, 0.59607846, 0.13333334, 1)
+energy = 1.15
+shadow_enabled = true
+texture = ExtResource("8_km5ld")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_km5ld")
+
 [connection signal="timeout" from="Collectibles/Timer" to="Collectibles" method="_on_timer_timeout"]
+[connection signal="timeout" from="ChangeTimeOfDay" to="." method="_on_change_time_of_day_timeout"]
