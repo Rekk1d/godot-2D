@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://c22p8qbiacnqq"]
+[gd_scene load_steps=21 format=4 uid="uid://c22p8qbiacnqq"]
 
 [ext_resource type="Script" uid="uid://cu4iamwrsqtly" path="res://scenes/Levels/level.gd" id="1_n6hdu"]
 [ext_resource type="PackedScene" uid="uid://khw4b1n7a3p4" path="res://scenes/Player/player.tscn" id="1_u52ul"]
@@ -7,8 +7,11 @@
 [ext_resource type="Texture2D" uid="uid://ctcxgtjljumri" path="res://assets/oak_woods_v1.0/background/background_layer_3.png" id="4_1ainy"]
 [ext_resource type="PackedScene" uid="uid://rjbi5f7viwwb" path="res://scenes/Buildings/shop.tscn" id="5_1ainy"]
 [ext_resource type="Texture2D" uid="uid://nb14ahspefuv" path="res://assets/oak_woods_v1.0/oak_woods_tileset.png" id="5_f2txt"]
+[ext_resource type="Texture2D" uid="uid://byq682s4ih1bm" path="res://assets/Sprite-0003.png" id="7_bg4jh"]
+[ext_resource type="Texture2D" uid="uid://dvhxjsmj8howg" path="res://assets/Sprite-0001.png" id="8_43ksg"]
 [ext_resource type="Texture2D" uid="uid://d3c3pecqmwr7y" path="res://assets/oak_woods_v1.0/decorations/circle.png" id="8_km5ld"]
 [ext_resource type="PackedScene" uid="uid://e4e3iv63gjt7" path="res://scenes/Mobs/mushroom.tscn" id="9_he7fi"]
+[ext_resource type="Texture2D" uid="uid://c5dm2woio5ees" path="res://assets/Sprite-0002.png" id="9_loupo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1ainy"]
 texture = ExtResource("5_f2txt")
@@ -442,34 +445,6 @@ physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_1ainy")
 
-[sub_resource type="GDScript" id="GDScript_1ainy"]
-script/source = "extends Label
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	text = \"HP: \" + str($\"../../Player/Player\".health)
-"
-
-[sub_resource type="GDScript" id="GDScript_n6hdu"]
-script/source = "extends Label
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	text = \"GOLD: \" + str($\"../../Player/Player\".gold)
-"
-
 [sub_resource type="Animation" id="Animation_i2t4f"]
 length = 0.001
 tracks/0/type = "value"
@@ -587,24 +562,6 @@ position = Vector2(93, 580)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="HP" type="Label" parent="CanvasLayer"]
-offset_left = 24.0
-offset_top = 14.0
-offset_right = 155.0
-offset_bottom = 64.0
-theme_override_font_sizes/font_size = 40
-text = "HP"
-script = SubResource("GDScript_1ainy")
-
-[node name="Gold" type="Label" parent="CanvasLayer"]
-offset_left = 24.0
-offset_top = 79.0
-offset_right = 129.0
-offset_bottom = 129.0
-theme_override_font_sizes/font_size = 40
-text = "Gold"
-script = SubResource("GDScript_n6hdu")
-
 [node name="DayCount" type="Label" parent="CanvasLayer"]
 modulate = Color(1, 1, 1, 0)
 offset_left = 473.0
@@ -619,6 +576,19 @@ text = "DAY
 libraries = {
 &"": SubResource("AnimationLibrary_8cye3")
 }
+
+[node name="HealthBar" type="TextureProgressBar" parent="CanvasLayer"]
+offset_left = 22.0
+offset_top = 14.0
+offset_right = 314.0
+offset_bottom = 69.0
+value = 50.0
+nine_patch_stretch = true
+texture_under = ExtResource("7_bg4jh")
+texture_over = ExtResource("8_43ksg")
+texture_progress = ExtResource("9_loupo")
+tint_over = Color(0.9764706, 0.77254903, 0, 0.827451)
+tint_progress = Color(0.70176125, 0, 0.22099623, 1)
 
 [node name="Collectibles" type="Node2D" parent="."]
 script = SubResource("GDScript_km5ld")
@@ -659,5 +629,6 @@ autostart = true
 [node name="Mushroom" parent="Mobs" instance=ExtResource("9_he7fi")]
 position = Vector2(-29, 577)
 
+[connection signal="health_change" from="Player/Player" to="." method="_on_player_health_change"]
 [connection signal="timeout" from="Collectibles/Timer" to="Collectibles" method="_on_timer_timeout"]
 [connection signal="timeout" from="Light/ChangeTimeOfDay" to="." method="_on_change_time_of_day_timeout"]

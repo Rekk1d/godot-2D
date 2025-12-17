@@ -14,6 +14,7 @@ enum {
 var player
 var direction
 var _state: int = IDLE
+var damage: int = 20
 
 var state: int:
 	set(value):
@@ -67,4 +68,8 @@ func chase_state() -> void:
 		attackDirection.rotation_degrees = 180
 	else:
 		sprite.flip_h = false
-		attackDirection.rotation_degrees = 180
+		attackDirection.rotation_degrees = 0
+
+
+func _on_hit_box_area_entered(area: Area2D) -> void:
+	Signals.emit_signal("enemy_attack", damage)

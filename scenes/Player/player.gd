@@ -1,12 +1,16 @@
 extends CharacterBody2D
 
+signal health_change (new_health)
+
 enum {
 	MOVE,
 	ATTACK,
 	ATTACK2,
 	ATTACK3,
 	BLOCK,
-	SLIDE
+	SLIDE,
+	HIT,
+	DEATH
 }
 
 @onready var animation = $AnimatedSprite2D
@@ -16,7 +20,8 @@ const SPEED = 150.0
 const JUMP_VELOCITY = -400.0
 
 var state = MOVE
-var health = 100
+var health
+var max_health = 100
 var gold = 0
 
 var run_speed = 1
@@ -28,6 +33,10 @@ var attack_cooldown = false
 
 var player_pos
 
+func _ready() -> void:
+	Signals.connect("enemy_attack", Callable (self, "_on_take_damage"))
+	health = max_health
+	
 func _physics_process(delta: float) -> void:
 	match state:
 		MOVE:
@@ -42,15 +51,16 @@ func _physics_process(delta: float) -> void:
 			block_state()
 		SLIDE:
 			slide_state()
+		HIT:
+			hit_state()
+		DEATH: 
+			death_state()
 			
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 		
 	if velocity.y > 0: 
 		play_anim('Fall')
-		
-	if health <= 0:
-		die()
 
 	move_and_slide()
 	player_pos = self.position
@@ -137,10 +147,25 @@ func attack_freeze():
 	await get_tree().create_timer(0.5).timeout
 	attack_cooldown = false
 	
-func die():
-	health = 0
+func hit_state() -> void:
+	velocity.x = 0
+	play_anim("Hit")
+	await animationPlayer.animation_finished
+	state = MOVE
+	
+func death_state() -> void:
+	velocity.x = 0
 	play_anim("Death")
 	await animationPlayer.animation_finished
 	queue_free()
-	get_tree().change_scene_to_file("res://scenes/Menu/menu.tscn")
+	get_tree().change_scene_to_file.bind("res://scenes/Menu/menu.tscn").call_deferred()
 	
+func _on_take_damage(enemy_damage: int) -> void:
+	health -= enemy_damage
+	if health <= 0:
+		health = 0
+		state = DEATH
+	else:
+		state = HIT
+	emit_signal("health_change", health)
+	print(health)

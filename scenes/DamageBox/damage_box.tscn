@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://dab6qufq8kl1n"]
+
+[ext_resource type="Script" uid="uid://dtyy0vhl10ocg" path="res://scenes/DamageBox/damage_box.gd" id="1_ohcok"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p73by"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ohcok"]
+radius = 8.0
+
+[node name="DamageBox" type="Node2D"]
+script = ExtResource("1_ohcok")
+
+[node name="HurtBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("CircleShape2D_p73by")
+
+[node name="HitBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(21, 0)
+shape = SubResource("CircleShape2D_ohcok")
+disabled = true
