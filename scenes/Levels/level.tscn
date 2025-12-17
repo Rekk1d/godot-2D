@@ -445,6 +445,23 @@ physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_1ainy")
 
+[sub_resource type="GDScript" id="GDScript_km5ld"]
+script/source = "extends Node2D
+
+var maxGold = 5
+var currentGold = 0;
+
+#func _on_timer_timeout() -> void:
+	#if currentGold < maxGold:
+		#var goldInstance = gold.instantiate()
+		#var randomGen = RandomNumberGenerator.new()
+		#var randomX = randi_range(50, 1130)
+		#goldInstance.position = Vector2(randomX, 50)
+		#add_child(goldInstance)
+		#currentGold += 1
+	
+"
+
 [sub_resource type="Animation" id="Animation_i2t4f"]
 length = 0.001
 tracks/0/type = "value"
@@ -496,23 +513,6 @@ _data = {
 &"day_count_fadeIn": SubResource("Animation_km5ld"),
 &"day_count_fadeOut": SubResource("Animation_8cye3")
 }
-
-[sub_resource type="GDScript" id="GDScript_km5ld"]
-script/source = "extends Node2D
-
-var maxGold = 5
-var currentGold = 0;
-
-#func _on_timer_timeout() -> void:
-	#if currentGold < maxGold:
-		#var goldInstance = gold.instantiate()
-		#var randomGen = RandomNumberGenerator.new()
-		#var randomX = randi_range(50, 1130)
-		#goldInstance.position = Vector2(randomX, 50)
-		#add_child(goldInstance)
-		#currentGold += 1
-	
-"
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_km5ld"]
 polygon = PackedVector2Array(-5519, 599, -5520, 688, 5104, 687, 5104, 599)
@@ -572,11 +572,6 @@ theme_override_font_sizes/font_size = 80
 text = "DAY
 "
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
-libraries = {
-&"": SubResource("AnimationLibrary_8cye3")
-}
-
 [node name="HealthBar" type="TextureProgressBar" parent="CanvasLayer"]
 offset_left = 22.0
 offset_top = 14.0
@@ -604,9 +599,15 @@ position = Vector2(340, 546)
 
 [node name="Light" type="Node2D" parent="."]
 
+[node name="LightAnimation" type="AnimationPlayer" parent="Light"]
+root_node = NodePath("../../CanvasLayer")
+libraries = {
+&"": SubResource("AnimationLibrary_8cye3")
+}
+
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="Light"]
 enabled = false
-energy = 0.0
+energy = 0.71
 blend_mode = 1
 
 [node name="PointLight2D" type="PointLight2D" parent="Light"]
@@ -621,7 +622,7 @@ texture = ExtResource("8_km5ld")
 occluder = SubResource("OccluderPolygon2D_km5ld")
 
 [node name="ChangeTimeOfDay" type="Timer" parent="Light"]
-wait_time = 20.0
+wait_time = 5.0
 autostart = true
 
 [node name="Mobs" type="Node2D" parent="."]

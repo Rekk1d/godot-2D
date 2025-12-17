@@ -2,6 +2,10 @@ extends CharacterBody2D
 
 signal health_change (new_health)
 
+@onready var animation = $AnimatedSprite2D
+@onready var animationPlayer = $AnimationPlayer
+@onready var attackDirection = $AttackDirection
+
 enum {
 	MOVE,
 	ATTACK,
@@ -13,15 +17,12 @@ enum {
 	DEATH
 }
 
-@onready var animation = $AnimatedSprite2D
-@onready var animationPlayer = $AnimationPlayer
-
 const SPEED = 150.0
 const JUMP_VELOCITY = -400.0
 
 var state = MOVE
 var health
-var max_health = 100
+var max_health = 200
 var gold = 0
 
 var run_speed = 1
@@ -32,6 +33,9 @@ var combo = false
 var attack_cooldown = false
 
 var player_pos
+var basic_damage = 10
+var damage_muliplier = 1
+var current_damage
 
 func _ready() -> void:
 	Signals.connect("enemy_attack", Callable (self, "_on_take_damage"))
@@ -65,6 +69,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	player_pos = self.position
 	Signals.emit_signal("player_position_update", player_pos)
+	current_damage = basic_damage * damage_muliplier
 
 func play_anim(name: String): 
 	animationPlayer.play(name)
@@ -90,8 +95,10 @@ func move_state():
 			
 	if direction == -1:
 		animation.flip_h = true
+		attackDirection.rotation_degrees = 180
 	elif direction == 1:
 		animation.flip_h = false
+		attackDirection.rotation_degrees = 0
 		
 	if Input.is_action_just_pressed("block"):
 		if(velocity.x == 0):
@@ -117,6 +124,7 @@ func slide_state():
 	state = MOVE
 
 func attack_state():
+	damage_muliplier = 1
 	if Input.is_action_just_pressed("attack") and combo:
 		state = ATTACK2
 	velocity.x = 0
@@ -126,6 +134,7 @@ func attack_state():
 	state = MOVE
 	
 func attack2_state():
+	damage_muliplier = 1.5
 	if Input.is_action_just_pressed("attack") and combo:
 		state = ATTACK3
 	play_anim('Attack2')
@@ -133,6 +142,7 @@ func attack2_state():
 	state = MOVE
 	
 func attack3_state():
+	damage_muliplier = 2
 	play_anim('Attack3')
 	await animationPlayer.animation_finished
 	state = MOVE
@@ -161,11 +171,19 @@ func death_state() -> void:
 	get_tree().change_scene_to_file.bind("res://scenes/Menu/menu.tscn").call_deferred()
 	
 func _on_take_damage(enemy_damage: int) -> void:
+	if state == BLOCK:
+		enemy_damage /= 2
+	elif state == SLIDE:
+		enemy_damage = 0
+	else:
+		state = HIT
 	health -= enemy_damage
 	if health <= 0:
 		health = 0
 		state = DEATH
-	else:
-		state = HIT
+	
 	emit_signal("health_change", health)
-	print(health)
+
+
+func _on_hit_box_area_entered(area: Area2D) -> void:
+	Signals.emit_signal("player_attack", current_damage)

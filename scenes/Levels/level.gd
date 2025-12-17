@@ -3,7 +3,7 @@ extends Node2D
 @onready var light = $Light/DirectionalLight2D
 @onready var lamp = $Light/PointLight2D
 @onready var dayCount = $CanvasLayer/DayCount
-@onready var animationPlayer = $CanvasLayer/AnimationPlayer
+@onready var animationPlayer = $Light/LightAnimation
 @onready var healthBar = $CanvasLayer/HealthBar
 @onready var player = $Player/Player
 
@@ -16,7 +16,7 @@ enum {
 
 var state = MORNING
 var currentDay: int = 1
-
+const TIME_PER_STATE = 5
 func _ready(): 
 	healthBar.max_value = player.max_health
 	healthBar.value = healthBar.max_value
@@ -32,26 +32,34 @@ func change_pointLight(energy: int) -> void:
 	var pointLight = get_tree().create_tween(); 
 	pointLight.tween_property(lamp, "energy", energy, 20)
 
+func next_state():
+	match state:
+		MORNING:
+			state = DAY
+		DAY:
+			state = EVENING
+		EVENING:
+			state = NIGHT
+		NIGHT:
+			state = MORNING
+			currentDay += 1
+			setDayCount()
+			setDayAnimation()
+			
 func _on_change_time_of_day_timeout() -> void:
 	match state:
 		MORNING:
-			change_time(0.2, 20)
+			change_time(0.2, TIME_PER_STATE)
 			change_pointLight(0)
-		#DAY:
-			#change_time(0.4, 60)
+		DAY:
+			change_time(0.4, TIME_PER_STATE )
 		EVENING:
-			change_time(0.75, 20)
+			change_time(0.75, TIME_PER_STATE)
 			change_pointLight(1)
-		#NIGHT:
-			#change_time(0.9, 20)
+		NIGHT:
+			change_time(0.9, TIME_PER_STATE )
 			
-	if state < 3:
-		state += 1
-	else:
-		state = 0
-		currentDay += 1
-		setDayCount()
-		setDayAnimation()
+	next_state()
 		
 func setDayCount() -> void:
 	dayCount.text = "Day: " + str(currentDay)

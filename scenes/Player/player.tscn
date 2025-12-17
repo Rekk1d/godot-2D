@@ -1,4 +1,4 @@
-[gd_scene load_steps=102 format=3 uid="uid://khw4b1n7a3p4"]
+[gd_scene load_steps=103 format=3 uid="uid://khw4b1n7a3p4"]
 
 [ext_resource type="Script" uid="uid://dg5t8d13dbu8q" path="res://scenes/Player/player.gd" id="1_2e7ox"]
 [ext_resource type="Texture2D" uid="uid://c5db50b3660nc" path="res://assets/oak_woods_v1.0/character/char_blue.png" id="1_m50tt"]
@@ -665,6 +665,18 @@ tracks/2/keys = {
 "method": &"combo_attack"
 }]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AttackDirection/DamageBox/HitBox/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
 
 [sub_resource type="Animation" id="Animation_k53q1"]
 length = 0.3
@@ -706,6 +718,18 @@ tracks/2/keys = {
 "method": &"combo_attack"
 }]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AttackDirection/DamageBox/HitBox/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
 
 [sub_resource type="Animation" id="Animation_fhl08"]
 length = 0.8
@@ -732,6 +756,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["Attack3"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackDirection/DamageBox/HitBox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
 }
 
 [sub_resource type="Animation" id="Animation_vtle1"]
@@ -981,6 +1017,21 @@ tracks/1/keys = {
 "values": ["Walk"]
 }
 
+[sub_resource type="Animation" id="Animation_hvfru"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AttackDirection/DamageBox/HitBox/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lfmf2"]
 _data = {
 &"Attack": SubResource("Animation_gwnis"),
@@ -992,6 +1043,7 @@ _data = {
 &"Hit": SubResource("Animation_x3vf3"),
 &"Idle": SubResource("Animation_apopc"),
 &"Jump": SubResource("Animation_5htga"),
+&"RESET": SubResource("Animation_hvfru"),
 &"Run": SubResource("Animation_p5o4e"),
 &"Slide": SubResource("Animation_gu6f8"),
 &"Walk": SubResource("Animation_dkpta")
@@ -1011,7 +1063,7 @@ shape = SubResource("CapsuleShape2D_1bi74")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -13)
 sprite_frames = SubResource("SpriteFrames_m50tt")
-animation = &"Death"
+animation = &"Attack2"
 autoplay = "Idle"
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -1051,5 +1103,7 @@ collision_mask = 32
 
 [node name="CollisionShape2D" parent="AttackDirection/DamageBox/HitBox" index="0"]
 position = Vector2(17, 0)
+
+[connection signal="area_entered" from="AttackDirection/DamageBox/HitBox" to="." method="_on_hit_box_area_entered"]
 
 [editable path="AttackDirection/DamageBox"]
