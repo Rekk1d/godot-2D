@@ -1,0 +1,97 @@
+[gd_scene load_steps=7 format=3 uid="uid://c8ieexqynetno"]
+
+[ext_resource type="Script" uid="uid://bse03unbyu2rh" path="res://scenes/Mobs/mob_health.gd" id="1_5mvwv"]
+[ext_resource type="Texture2D" uid="uid://dluleflt68e6g" path="res://assets/sprites/mob_healt_empty.png" id="1_xwlqo"]
+[ext_resource type="Texture2D" uid="uid://d3tqdehyayxy6" path="res://assets/sprites/mob_healt_progress.png" id="2_5mvwv"]
+
+[sub_resource type="Animation" id="Animation_5mvwv"]
+resource_name = "damage_text"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DamageText:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-58, -135), Vector2(-57, -209)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DamageText:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_5i6kw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DamageText:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-33, -82)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DamageText:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pq4o4"]
+_data = {
+&"RESET": SubResource("Animation_5i6kw"),
+&"damage_text": SubResource("Animation_5mvwv")
+}
+
+[node name="MobHealth" type="Node2D"]
+script = ExtResource("1_5mvwv")
+
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+modulate = Color(1, 1, 1, 0.654902)
+offset_left = -102.99999
+offset_top = -16.0
+offset_right = 133.0
+offset_bottom = 23.0
+scale = Vector2(0.8729246, 0.8729246)
+value = 50.0
+nine_patch_stretch = true
+texture_under = ExtResource("1_xwlqo")
+texture_progress = ExtResource("2_5mvwv")
+tint_progress = Color(0.8244802, 0, 0.1514149, 1)
+
+[node name="DamageText" type="Label" parent="."]
+offset_left = -33.0
+offset_top = -82.0
+offset_right = 81.0
+offset_bottom = 196.0
+theme_override_font_sizes/font_size = 100
+text = "20
+"
+horizontal_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_pq4o4")
+}

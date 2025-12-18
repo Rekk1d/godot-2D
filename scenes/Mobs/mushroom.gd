@@ -43,7 +43,6 @@ var state: int:
 	
 func _ready() -> void:
 	Signals.connect("player_position_update", Callable (self, "_on_player_position_update"))
-	Signals.connect("player_attack", Callable (self, "_on_take_damage"))
 	health = max_health
 		
 	
@@ -97,12 +96,11 @@ func recover_state() -> void:
 func _on_hit_box_area_entered(area: Area2D) -> void:
 	Signals.emit_signal("enemy_attack", damage)
 
-func _on_take_damage(player_damage: int) -> void:
-	health -= player_damage
-	if health <= 0:
-		state = DEATH
-	else:
-		state = IDLE
-		state = DAMAGE
-	
-	
+
+func _on_mob_health_on_death() -> void:
+	state = DEATH
+
+
+func _on_mob_health_on_take_damage() -> void:
+	state = IDLE
+	state = DAMAGE

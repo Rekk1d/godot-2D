@@ -7,11 +7,11 @@
 [ext_resource type="Texture2D" uid="uid://ctcxgtjljumri" path="res://assets/oak_woods_v1.0/background/background_layer_3.png" id="4_1ainy"]
 [ext_resource type="PackedScene" uid="uid://rjbi5f7viwwb" path="res://scenes/Buildings/shop.tscn" id="5_1ainy"]
 [ext_resource type="Texture2D" uid="uid://nb14ahspefuv" path="res://assets/oak_woods_v1.0/oak_woods_tileset.png" id="5_f2txt"]
-[ext_resource type="Texture2D" uid="uid://byq682s4ih1bm" path="res://assets/Sprite-0003.png" id="7_bg4jh"]
-[ext_resource type="Texture2D" uid="uid://dvhxjsmj8howg" path="res://assets/Sprite-0001.png" id="8_43ksg"]
+[ext_resource type="Texture2D" uid="uid://byq682s4ih1bm" path="res://assets/sprites/Sprite-0003.png" id="7_bg4jh"]
+[ext_resource type="Texture2D" uid="uid://dvhxjsmj8howg" path="res://assets/sprites/Sprite-0001.png" id="8_43ksg"]
 [ext_resource type="Texture2D" uid="uid://d3c3pecqmwr7y" path="res://assets/oak_woods_v1.0/decorations/circle.png" id="8_km5ld"]
 [ext_resource type="PackedScene" uid="uid://e4e3iv63gjt7" path="res://scenes/Mobs/mushroom.tscn" id="9_he7fi"]
-[ext_resource type="Texture2D" uid="uid://c5dm2woio5ees" path="res://assets/Sprite-0002.png" id="9_loupo"]
+[ext_resource type="Texture2D" uid="uid://c5dm2woio5ees" path="res://assets/sprites/Sprite-0002.png" id="9_loupo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1ainy"]
 texture = ExtResource("5_f2txt")
