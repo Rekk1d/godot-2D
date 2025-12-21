@@ -18,8 +18,7 @@ var state = MORNING
 var currentDay: int = 1
 const TIME_PER_STATE = 5
 func _ready(): 
-	healthBar.max_value = player.max_health
-	healthBar.value = healthBar.max_value
+	healthBar.value = Global.player_health 
 	light.enabled = true
 	setDayCount()
 	setDayAnimation()
@@ -71,4 +70,4 @@ func setDayAnimation():
 
 
 func _on_player_health_change(new_health: Variant) -> void:
-	healthBar.value = new_health
+	healthBar.value = Global.player_health 

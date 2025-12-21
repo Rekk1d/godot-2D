@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.5", "Forward Plus")
 [autoload]
 
 Signals="*res://scenes/signals.gd"
+Global="*res://global.gd"
 
 [editor_plugins]
 

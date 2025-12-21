@@ -21,8 +21,6 @@ const SPEED = 150.0
 const JUMP_VELOCITY = -400.0
 
 var state = MOVE
-var health
-var max_health = 200
 var gold = 0
 
 var run_speed = 1
@@ -39,7 +37,6 @@ var current_damage
 
 func _ready() -> void:
 	Signals.connect("enemy_attack", Callable (self, "_on_take_damage"))
-	health = max_health
 	
 func _physics_process(delta: float) -> void:
 	match state:
@@ -177,12 +174,12 @@ func _on_take_damage(enemy_damage: int) -> void:
 		enemy_damage = 0
 	else:
 		state = HIT
-	health -= enemy_damage
-	if health <= 0:
-		health = 0
+	Global.player_health -= enemy_damage
+	if Global.player_health  <= 0:
+		Global.player_health  = 0
 		state = DEATH
 	
-	emit_signal("health_change", health)
+	emit_signal("health_change", Global.player_health)
 
 
 func _on_hit_box_area_entered(area: Area2D) -> void:
