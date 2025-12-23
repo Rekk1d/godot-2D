@@ -9,6 +9,8 @@ signal on_take_damage()
 @onready var damage_text = $DamageText
 @onready var animationPlayer = $AnimationPlayer
 
+var player_damage 
+
 var health = max_health:
 	set(value):
 		health = value
@@ -23,9 +25,12 @@ func _ready() -> void:
 	damage_text.modulate = 0
 	print(health)
 	
-func _on_take_damage(player_damage: int) -> void:
+func _on_take_damage(damage: int) -> void:
+	player_damage = damage
+	
+func _on_hurt_box_area_entered(area: Area2D) -> void:
+	await get_tree().create_timer(0.05).timeout
 	health -= player_damage
-	print(health)
 	animationPlayer.stop()
 	animationPlayer.play("damage_text")
 	damage_text.text = str(player_damage)
@@ -34,4 +39,3 @@ func _on_take_damage(player_damage: int) -> void:
 		health_bar.visible = false
 	else:
 		emit_signal("on_take_damage")
-	

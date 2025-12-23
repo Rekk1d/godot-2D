@@ -14,7 +14,7 @@ const run_cost = 0.3
 var max_health: int = 100
 var health: 
 	set(value):
-		health = value
+		health = clamp(value, 0, max_health)
 		health_bar.value = health	
 var stamina = 50:
 	set(value):
@@ -36,9 +36,13 @@ func stamina_consumption():
 	stamina -= stamina_cost
 
 func update_stamina_color() -> void:
-	if stamina > 60:
+	if stamina > 70:
 		stamina_bar.tint_progress = Color(0, 1, 0)
 	elif stamina > 30:
 		stamina_bar.tint_progress = Color(1, 1, 0)
 	else:
 		stamina_bar.tint_progress = Color(1, 0, 0)
+
+
+func _on_health_regen_timeout() -> void:
+	health += 1

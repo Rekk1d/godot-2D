@@ -602,7 +602,7 @@ shape = SubResource("RectangleShape2D_iwc06")
 
 [node name="HurtBox" parent="AttackDirection/DamageBox" index="0"]
 collision_layer = 32
-collision_mask = 0
+collision_mask = 64
 
 [node name="HitBox" parent="AttackDirection/DamageBox" index="1"]
 collision_layer = 0
@@ -616,6 +616,7 @@ position = Vector2(4.7683716e-07, -27)
 scale = Vector2(0.16, 0.16)
 
 [connection signal="body_entered" from="AttackDirection/AttackRange" to="." method="_on_attack_range_body_entered"]
+[connection signal="area_entered" from="AttackDirection/DamageBox/HurtBox" to="MobHealth" method="_on_hurt_box_area_entered"]
 [connection signal="area_entered" from="AttackDirection/DamageBox/HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="on_death" from="MobHealth" to="." method="_on_mob_health_on_death"]
 [connection signal="on_take_damage" from="MobHealth" to="." method="_on_mob_health_on_take_damage"]

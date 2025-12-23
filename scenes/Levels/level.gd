@@ -6,6 +6,8 @@ extends Node2D
 @onready var animationPlayer = $Light/LightAnimation
 @onready var player = $Player/Player
 
+var mushroom_preload = preload("res://scenes/Mobs/mushroom.tscn")
+
 enum {
 	MORNING,
 	DAY,
@@ -50,12 +52,12 @@ func _on_change_time_of_day_timeout() -> void:
 			change_time(0.2, TIME_PER_STATE)
 			change_pointLight(0)
 		DAY:
-			change_time(0.4, TIME_PER_STATE )
+			change_time(0.4, TIME_PER_STATE)
 		EVENING:
 			change_time(0.75, TIME_PER_STATE)
 			change_pointLight(1)
 		NIGHT:
-			change_time(0.9, TIME_PER_STATE )
+			change_time(0.9, TIME_PER_STATE)
 			
 	next_state()
 		
@@ -66,3 +68,11 @@ func setDayAnimation():
 	animationPlayer.play("day_count_fadeIn")
 	await get_tree().create_timer(3).timeout
 	animationPlayer.play("day_count_fadeOut")
+
+func _on_mobs_spawner_timeout() -> void:
+	mushrooms_spawn()
+
+func mushrooms_spawn() -> void:
+	var mushroom_instance = mushroom_preload.instantiate()
+	mushroom_instance.position = Vector2(randi_range(-500, -200) ,488)
+	$Mobs.add_child(mushroom_instance)
