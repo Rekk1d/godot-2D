@@ -1,10 +1,9 @@
 extends CharacterBody2D
 
-signal health_change (new_health)
-
 @onready var animation = $AnimatedSprite2D
 @onready var animationPlayer = $AnimationPlayer
 @onready var attackDirection = $AttackDirection
+@onready var stats = $stats
 
 enum {
 	MOVE,
@@ -24,16 +23,17 @@ var state = MOVE
 var gold = 0
 
 var run_speed = 1
-var is_slide_available = true
 var slide_cooldown = 1
-var is_sliding = false
+var stamina_recovery = false
+var stamina_recovery_time = 2
+
 var combo = false
 var attack_cooldown = false
-
-var player_pos
 var basic_damage = 10
 var damage_muliplier = 1
 var current_damage
+
+var player_pos
 
 func _ready() -> void:
 	Signals.connect("enemy_attack", Callable (self, "_on_take_damage"))
@@ -85,8 +85,9 @@ func move_state():
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		if velocity.y == 0: 
 			play_anim('Idle')
-	if Input.is_action_pressed('run'):
-		run_speed = 2
+	if Input.is_action_pressed('run') and !stamina_recovery:
+		run_speed = 1.5
+		stats.stamina -= stats.run_cost
 	else:
 		run_speed = 1
 			
@@ -97,30 +98,34 @@ func move_state():
 		animation.flip_h = false
 		attackDirection.rotation_degrees = 0
 		
-	if Input.is_action_just_pressed("block"):
-		if(velocity.x == 0):
+	if Input.is_action_just_pressed("block") and !stamina_recovery:
+		if velocity.x == 0 and stats.stamina > 1:
 			state = BLOCK
 		else:
-			if is_slide_available:
+			stats.stamina_cost = stats.slide_cost
+			if stats.stamina > stats.stamina_cost:
 				state = SLIDE
-				is_slide_available = false
-	if Input.is_action_just_pressed("attack") and not attack_cooldown:
-		state = ATTACK
+				
+	if Input.is_action_just_pressed("attack") and !stamina_recovery:
+		stats.stamina_cost = stats.attack_cost
+		if not attack_cooldown and stats.stamina > stats.stamina_cost:
+			state = ATTACK
 	
 		
 func block_state():
+	stats.stamina -= stats.block_cost
 	velocity.x = 0
 	play_anim('Block')
-	if Input.is_action_just_released("block"):
+	if Input.is_action_just_released("block") or stamina_recovery:
 		state = MOVE
 		
 func slide_state():
 	play_anim('Slide')
-	await get_tree().create_timer(slide_cooldown).timeout
-	is_slide_available = true
+	await animationPlayer.animation_finished
 	state = MOVE
 
 func attack_state():
+	stats.stamina_cost = stats.attack_cost
 	damage_muliplier = 1
 	if Input.is_action_just_pressed("attack") and combo:
 		state = ATTACK2
@@ -132,7 +137,7 @@ func attack_state():
 	
 func attack2_state():
 	damage_muliplier = 1.5
-	if Input.is_action_just_pressed("attack") and combo:
+	if Input.is_action_just_pressed("attack") and combo and stats.stamina > stats.stamina_cost:
 		state = ATTACK3
 	play_anim('Attack2')
 	await animationPlayer.animation_finished
@@ -174,13 +179,19 @@ func _on_take_damage(enemy_damage: int) -> void:
 		enemy_damage = 0
 	else:
 		state = HIT
-	Global.player_health -= enemy_damage
-	if Global.player_health  <= 0:
-		Global.player_health  = 0
+	stats.health -= enemy_damage
+	if stats.health  <= 0:
+		stats.health  = 0
 		state = DEATH
 	
-	emit_signal("health_change", Global.player_health)
+	#emit_signal("health_change", Global.player_health)
 
 
 func _on_hit_box_area_entered(area: Area2D) -> void:
 	Signals.emit_signal("player_attack", current_damage)
+
+
+func _on_stats_no_stamina() -> void:
+	stamina_recovery = true
+	await get_tree().create_timer(stamina_recovery_time).timeout
+	stamina_recovery = false

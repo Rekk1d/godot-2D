@@ -605,6 +605,5 @@ autostart = true
 [node name="Mushroom" parent="Mobs" instance=ExtResource("9_he7fi")]
 position = Vector2(-29, 577)
 
-[connection signal="health_change" from="Player/Player" to="." method="_on_player_health_change"]
 [connection signal="timeout" from="Collectibles/Timer" to="Collectibles" method="_on_timer_timeout"]
 [connection signal="timeout" from="Light/ChangeTimeOfDay" to="." method="_on_change_time_of_day_timeout"]
