@@ -42,7 +42,6 @@ var state: int:
 		return _state
 	
 func _ready() -> void:
-	Signals.connect("player_position_update", Callable (self, "_on_player_position_update"))
 	health = max_health
 		
 	
@@ -52,13 +51,12 @@ func _physics_process(delta: float) -> void:
 	if state == CHASE:
 		chase_state()
 	move_and_slide()
+	player = Global.player_pos
 		
 
 func _on_attack_range_body_entered(body: Node2D) -> void:
 	state = ATTACK
 	
-func _on_player_position_update(player_pos) -> void:
-		player = player_pos
 		
 func idle_state() -> void:
 	animationPlayer.play("Idle")

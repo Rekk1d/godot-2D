@@ -18,22 +18,19 @@ var health = max_health:
 		health_bar.visible = true
 
 func _ready() -> void:
-	Signals.connect("player_attack", Callable(self, "_on_take_damage"))
 	health = max_health
 	health_bar.max_value = max_health
 	health_bar.visible = false
 	damage_text.modulate = 0
 	print(health)
 	
-func _on_take_damage(damage: int) -> void:
-	player_damage = damage
 	
 func _on_hurt_box_area_entered(area: Area2D) -> void:
 	await get_tree().create_timer(0.05).timeout
-	health -= player_damage
+	health -= Global.player_damage
 	animationPlayer.stop()
 	animationPlayer.play("damage_text")
-	damage_text.text = str(player_damage)
+	damage_text.text = str(Global.player_damage)
 	if health <= 0:
 		emit_signal("on_death")
 		health_bar.visible = false

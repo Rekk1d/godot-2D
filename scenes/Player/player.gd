@@ -31,9 +31,6 @@ var combo = false
 var attack_cooldown = false
 var basic_damage = 10
 var damage_muliplier = 1
-var current_damage
-
-var player_pos
 
 func _ready() -> void:
 	Signals.connect("enemy_attack", Callable (self, "_on_take_damage"))
@@ -64,9 +61,8 @@ func _physics_process(delta: float) -> void:
 		play_anim('Fall')
 
 	move_and_slide()
-	player_pos = self.position
-	Signals.emit_signal("player_position_update", player_pos)
-	current_damage = basic_damage * damage_muliplier
+	Global.player_pos = self.position
+	Global.player_damage = basic_damage * damage_muliplier
 
 func play_anim(name: String): 
 	animationPlayer.play(name)
@@ -188,7 +184,7 @@ func _on_take_damage(enemy_damage: int) -> void:
 
 
 func _on_hit_box_area_entered(area: Area2D) -> void:
-	Signals.emit_signal("player_attack", current_damage)
+	Signals.emit_signal("player_attack", Global.player_damage)
 
 
 func _on_stats_no_stamina() -> void:
