@@ -369,6 +369,18 @@ tracks/3/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AttackDirection/DamageBox/HitBox/CollisionShape2D:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_5pr1h"]
 length = 0.5714286
@@ -554,6 +566,18 @@ tracks/2/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AttackDirection/DamageBox/HitBox/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hnbcd"]
 _data = {
@@ -580,7 +604,7 @@ shape = SubResource("CapsuleShape2D_332hr")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, -11)
 sprite_frames = SubResource("SpriteFrames_x80jq")
-animation = &"Idle"
+animation = &"Death"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -614,6 +638,7 @@ position = Vector2(17, -2)
 [node name="MobHealth" parent="." instance=ExtResource("8_a56nr")]
 position = Vector2(4.7683716e-07, -27)
 scale = Vector2(0.16, 0.16)
+max_health = 10
 
 [connection signal="body_entered" from="AttackDirection/AttackRange" to="." method="_on_attack_range_body_entered"]
 [connection signal="area_entered" from="AttackDirection/DamageBox/HurtBox" to="MobHealth" method="_on_hurt_box_area_entered"]

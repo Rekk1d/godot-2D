@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://coarfh0pbgnmo" path="res://scenes/UI/canvas_layer.tscn" id="7_42npc"]
 [ext_resource type="Texture2D" uid="uid://d3c3pecqmwr7y" path="res://assets/oak_woods_v1.0/decorations/circle.png" id="8_km5ld"]
 [ext_resource type="PackedScene" uid="uid://dhku0sonx0t18" path="res://scenes/UI/pause_menu.tscn" id="9_bg4jh"]
+[ext_resource type="Script" uid="uid://dmtrfkuljl4i1" path="res://scenes/Levels/collectibles.gd" id="12_43ksg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1ainy"]
 texture = ExtResource("5_f2txt")
@@ -444,23 +445,6 @@ physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_1ainy")
 
-[sub_resource type="GDScript" id="GDScript_km5ld"]
-script/source = "extends Node2D
-
-var maxGold = 5
-var currentGold = 0;
-
-#func _on_timer_timeout() -> void:
-	#if currentGold < maxGold:
-		#var goldInstance = gold.instantiate()
-		#var randomGen = RandomNumberGenerator.new()
-		#var randomX = randi_range(50, 1130)
-		#goldInstance.position = Vector2(randomX, 50)
-		#add_child(goldInstance)
-		#currentGold += 1
-	
-"
-
 [sub_resource type="Animation" id="Animation_i2t4f"]
 length = 0.001
 tracks/0/type = "value"
@@ -568,13 +552,6 @@ position = Vector2(93, 580)
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("9_bg4jh")]
 process_mode = 2
 
-[node name="Collectibles" type="Node2D" parent="."]
-script = SubResource("GDScript_km5ld")
-
-[node name="Timer" type="Timer" parent="Collectibles"]
-wait_time = 2.0
-autostart = true
-
 [node name="Buildings" type="Node2D" parent="."]
 
 [node name="Shop" parent="Buildings" instance=ExtResource("5_1ainy")]
@@ -614,9 +591,11 @@ autostart = true
 wait_time = 5.0
 autostart = true
 
+[node name="Collectibles" type="Node2D" parent="."]
+script = ExtResource("12_43ksg")
+
 [connection signal="pressed" from="CanvasLayer/PauseMenu/Panel/VBoxContainer/Resume" to="PauseManager" method="_on_resume_pressed"]
 [connection signal="pressed" from="CanvasLayer/PauseMenu/Panel/VBoxContainer/Quit" to="PauseManager" method="_on_quit_pressed"]
-[connection signal="timeout" from="Collectibles/Timer" to="Collectibles" method="_on_timer_timeout"]
 [connection signal="timeout" from="Light/ChangeTimeOfDay" to="." method="_on_change_time_of_day_timeout"]
 [connection signal="timeout" from="Mobs/MobsSpawner" to="." method="_on_mobs_spawner_timeout"]
 

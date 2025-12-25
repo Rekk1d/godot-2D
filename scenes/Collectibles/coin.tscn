@@ -1,0 +1,75 @@
+[gd_scene load_steps=11 format=3 uid="uid://c5fyibr1502s1"]
+
+[ext_resource type="Script" uid="uid://d25w3vyyjox10" path="res://scenes/Collectibles/coin.gd" id="1_6vlgc"]
+[ext_resource type="Texture2D" uid="uid://diekjk1kawab0" path="res://assets/oak_woods_v1.0/MonedaD.png" id="1_qygne"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ivv4e"]
+size = Vector2(12, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ais5i"]
+atlas = ExtResource("1_qygne")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h6jfl"]
+atlas = ExtResource("1_qygne")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_867vd"]
+atlas = ExtResource("1_qygne")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bo6c2"]
+atlas = ExtResource("1_qygne")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_clxuu"]
+atlas = ExtResource("1_qygne")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yyguw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ais5i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h6jfl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_867vd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bo6c2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_clxuu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qygne"]
+radius = 6.0
+
+[node name="Coin" type="CharacterBody2D"]
+collision_layer = 0
+script = ExtResource("1_6vlgc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ivv4e")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.875, 0.87499994)
+sprite_frames = SubResource("SpriteFrames_yyguw")
+autoplay = "default"
+frame_progress = 0.59529436
+
+[node name="Detector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
+shape = SubResource("CircleShape2D_qygne")
+
+[connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]

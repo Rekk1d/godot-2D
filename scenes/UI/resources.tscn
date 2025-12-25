@@ -1,0 +1,66 @@
+[gd_scene load_steps=5 format=3 uid="uid://cirgn1ntiub4d"]
+
+[ext_resource type="Texture2D" uid="uid://bsbj0uiein220" path="res://assets/sprites/Gold.png" id="1_b0nar"]
+[ext_resource type="Texture2D" uid="uid://ccnghfnkhvp8r" path="res://assets/sprites/Food_Icon.png" id="2_qvhb6"]
+[ext_resource type="Texture2D" uid="uid://dtod6u2gcdb1i" path="res://assets/sprites/Wood_Icon.png" id="3_hxv8q"]
+[ext_resource type="Texture2D" uid="uid://glj5qytqfome" path="res://assets/sprites/Rock_Icon.png" id="4_3natf"]
+
+[node name="Resources" type="CanvasLayer"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Control"]
+layout_mode = 0
+offset_left = 306.0
+offset_top = 18.0
+offset_right = 844.0
+offset_bottom = 89.87221
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer"]
+layout_mode = 2
+
+[node name="GoldIcon" type="TextureRect" parent="Control/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_b0nar")
+
+[node name="GoldText" type="Label" parent="Control/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+
+[node name="FoodIcon" type="TextureRect" parent="Control/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("2_qvhb6")
+
+[node name="FoodText" type="Label" parent="Control/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+
+[node name="WoodIcon" type="TextureRect" parent="Control/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("3_hxv8q")
+
+[node name="WoodText" type="Label" parent="Control/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+
+[node name="RockIcon" type="TextureRect" parent="Control/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("4_3natf")
+
+[node name="RockText" type="Label" parent="Control/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"

@@ -9,8 +9,6 @@ signal on_take_damage()
 @onready var damage_text = $DamageText
 @onready var animationPlayer = $AnimationPlayer
 
-var player_damage 
-
 var health = max_health:
 	set(value):
 		health = value
