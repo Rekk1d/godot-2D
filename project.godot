@@ -23,6 +23,10 @@ Global="*res://scenes/global.gd"
 
 enabled=PackedStringArray("res://addons/AS2P/plugin.cfg")
 
+[gui]
+
+theme/custom="uid://dud00fuqqt7ux"
+
 [input]
 
 left={

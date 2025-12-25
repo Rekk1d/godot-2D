@@ -20,7 +20,6 @@ const SPEED = 150.0
 const JUMP_VELOCITY = -400.0
 
 var state = MOVE
-var gold = 0
 
 var run_speed = 1
 var slide_cooldown = 1
