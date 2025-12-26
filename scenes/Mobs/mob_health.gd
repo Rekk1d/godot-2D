@@ -20,7 +20,6 @@ func _ready() -> void:
 	health_bar.max_value = max_health
 	health_bar.visible = false
 	damage_text.modulate = 0
-	print(health)
 	
 	
 func _on_hurt_box_area_entered(area: Area2D) -> void:

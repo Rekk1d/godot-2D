@@ -1,17 +1,18 @@
-[gd_scene load_steps=20 format=4 uid="uid://c22p8qbiacnqq"]
+[gd_scene load_steps=21 format=4 uid="uid://c22p8qbiacnqq"]
 
 [ext_resource type="Script" uid="uid://cu4iamwrsqtly" path="res://scenes/Levels/level.gd" id="1_n6hdu"]
 [ext_resource type="PackedScene" uid="uid://khw4b1n7a3p4" path="res://scenes/Player/player.tscn" id="1_u52ul"]
 [ext_resource type="Texture2D" uid="uid://hsyghu7chl4q" path="res://assets/oak_woods_v1.0/background/background_layer_1.png" id="2_0b4ue"]
-[ext_resource type="Script" uid="uid://bq2vqugr5et12" path="res://scenes/Levels/pause_manager.gd" id="2_neck2"]
+[ext_resource type="Script" uid="uid://bq2vqugr5et12" path="res://scenes/Levels/Manager.gd" id="2_neck2"]
 [ext_resource type="Texture2D" uid="uid://cak0j0r246ksp" path="res://assets/oak_woods_v1.0/background/background_layer_2.png" id="3_f2txt"]
 [ext_resource type="Texture2D" uid="uid://ctcxgtjljumri" path="res://assets/oak_woods_v1.0/background/background_layer_3.png" id="4_1ainy"]
 [ext_resource type="PackedScene" uid="uid://rjbi5f7viwwb" path="res://scenes/Buildings/shop.tscn" id="5_1ainy"]
 [ext_resource type="Texture2D" uid="uid://nb14ahspefuv" path="res://assets/oak_woods_v1.0/oak_woods_tileset.png" id="5_f2txt"]
 [ext_resource type="PackedScene" uid="uid://coarfh0pbgnmo" path="res://scenes/UI/canvas_layer.tscn" id="7_42npc"]
-[ext_resource type="Texture2D" uid="uid://d3c3pecqmwr7y" path="res://assets/oak_woods_v1.0/decorations/circle.png" id="8_km5ld"]
 [ext_resource type="PackedScene" uid="uid://dhku0sonx0t18" path="res://scenes/UI/pause_menu.tscn" id="9_bg4jh"]
+[ext_resource type="Texture2D" uid="uid://deuhqeg34an1j" path="res://assets/oak_woods_v1.0/decorations/lamp.png" id="11_bg4jh"]
 [ext_resource type="Script" uid="uid://dmtrfkuljl4i1" path="res://scenes/Levels/collectibles.gd" id="12_43ksg"]
+[ext_resource type="PackedScene" uid="uid://duqw8nau73207" path="res://scenes/light/lantern.tscn" id="12_loupo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1ainy"]
 texture = ExtResource("5_f2txt")
@@ -503,7 +504,7 @@ polygon = PackedVector2Array(-5519, 599, -5520, 688, 5104, 687, 5104, 599)
 [node name="Level" type="Node2D"]
 script = ExtResource("1_n6hdu")
 
-[node name="PauseManager" type="Node" parent="."]
+[node name="Manager" type="Node" parent="."]
 process_mode = 3
 script = ExtResource("2_neck2")
 
@@ -557,6 +558,13 @@ process_mode = 2
 [node name="Shop" parent="Buildings" instance=ExtResource("5_1ainy")]
 position = Vector2(340, 546)
 
+[node name="Lamp" type="Sprite2D" parent="Buildings"]
+position = Vector2(535, 563)
+texture = ExtResource("11_bg4jh")
+
+[node name="Lantern" parent="Buildings/Lamp" instance=ExtResource("12_loupo")]
+position = Vector2(-5, -7)
+
 [node name="Light" type="Node2D" parent="."]
 
 [node name="LightAnimation" type="AnimationPlayer" parent="Light"]
@@ -570,19 +578,11 @@ enabled = false
 energy = 0.71
 blend_mode = 1
 
-[node name="PointLight2D" type="PointLight2D" parent="Light"]
-position = Vector2(288, 557.00006)
-scale = Vector2(0.3449805, 0.19351561)
-color = Color(0.91764706, 0.59607846, 0.13333334, 1)
-energy = 1.15
-shadow_enabled = true
-texture = ExtResource("8_km5ld")
-
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Light"]
 occluder = SubResource("OccluderPolygon2D_km5ld")
 
 [node name="ChangeTimeOfDay" type="Timer" parent="Light"]
-wait_time = 5.0
+wait_time = 20.0
 autostart = true
 
 [node name="Mobs" type="Node2D" parent="."]
@@ -594,8 +594,10 @@ autostart = true
 [node name="Collectibles" type="Node2D" parent="."]
 script = ExtResource("12_43ksg")
 
-[connection signal="pressed" from="CanvasLayer/PauseMenu/Panel/VBoxContainer/Resume" to="PauseManager" method="_on_resume_pressed"]
-[connection signal="pressed" from="CanvasLayer/PauseMenu/Panel/VBoxContainer/Quit" to="PauseManager" method="_on_quit_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/Panel/VBoxContainer/Resume" to="Manager" method="_on_resume_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/Panel/VBoxContainer/Save" to="Manager" method="_on_save_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/Panel/VBoxContainer/Load" to="Manager" method="_on_load_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/Panel/VBoxContainer/Quit" to="Manager" method="_on_quit_pressed"]
 [connection signal="timeout" from="Light/ChangeTimeOfDay" to="." method="_on_change_time_of_day_timeout"]
 [connection signal="timeout" from="Mobs/MobsSpawner" to="." method="_on_mobs_spawner_timeout"]
 

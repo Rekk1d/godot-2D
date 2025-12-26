@@ -21,6 +21,7 @@ const TIME_PER_STATE = 5
 
 func _ready(): 
 	light.enabled = true
+	Global.player_gold = 0
 	setDayCount()
 	setDayAnimation()
 	
@@ -45,6 +46,7 @@ func next_state():
 			currentDay += 1
 			setDayCount()
 			setDayAnimation()
+	Signals.emit_signal("day_time", state)
 			
 func _on_change_time_of_day_timeout() -> void:
 	match state:
