@@ -5,7 +5,6 @@ extends Node2D
 @onready var dayCount = $CanvasLayer/DayCount
 @onready var animationPlayer = $Light/LightAnimation
 @onready var player = $Player/Player
-@onready var fireflies: GPUParticles2D = $Fireflies
 
 var mushroom_preload = preload("res://scenes/Mobs/mushroom.tscn")
 
@@ -52,13 +51,13 @@ func next_state():
 func _on_change_time_of_day_timeout() -> void:
 	match state:
 		MORNING:
-			switch_fireflies(false)
+			player.switch_fireflies(false)
 			change_time(0.2, TIME_PER_STATE)
 			change_pointLight(0)
 		DAY:
 			change_time(0.4, TIME_PER_STATE)
 		EVENING:
-			switch_fireflies(true)
+			player.switch_fireflies(true)
 			change_time(0.75, TIME_PER_STATE)
 			change_pointLight(1)
 		NIGHT:
@@ -81,6 +80,3 @@ func mushrooms_spawn() -> void:
 	var mushroom_instance = mushroom_preload.instantiate()
 	mushroom_instance.position = Vector2(randi_range(-500, -200) ,488)
 	$Mobs.add_child(mushroom_instance)
-	
-func switch_fireflies(active: bool) -> void:
-	fireflies.emitting = active

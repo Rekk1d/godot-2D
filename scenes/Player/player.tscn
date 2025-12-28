@@ -1,4 +1,4 @@
-[gd_scene load_steps=105 format=3 uid="uid://khw4b1n7a3p4"]
+[gd_scene load_steps=111 format=3 uid="uid://khw4b1n7a3p4"]
 
 [ext_resource type="Script" uid="uid://dg5t8d13dbu8q" path="res://scenes/Player/player.gd" id="1_2e7ox"]
 [ext_resource type="Texture2D" uid="uid://c5db50b3660nc" path="res://assets/oak_woods_v1.0/character/char_blue.png" id="1_m50tt"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cirgn1ntiub4d" path="res://scenes/UI/resources.tscn" id="8_dl1wr"]
 [ext_resource type="PackedScene" uid="uid://duqw8nau73207" path="res://scenes/light/lantern.tscn" id="8_wwtew"]
 [ext_resource type="PackedScene" uid="uid://cpo536m8djm5d" path="res://scenes/Player/leafs.tscn" id="9_wwtew"]
+[ext_resource type="Texture2D" uid="uid://dbqme1nkutr7k" path="res://assets/sprites/spotlight.png" id="10_uxo23"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1bi74"]
 
@@ -1137,6 +1138,35 @@ _data = {
 &"Walk": SubResource("Animation_dkpta")
 }
 
+[sub_resource type="Gradient" id="Gradient_n7rn1"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.6901961)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1meta"]
+gradient = SubResource("Gradient_n7rn1")
+
+[sub_resource type="Curve" id="Curve_7tfl1"]
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(0.5075529, 0.953125), 0.0, 0.0, 0, 0, Vector2(1, 0.1328125), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_1meta"]
+curve = SubResource("Curve_7tfl1")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jxtnq"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(100, 100, 1)
+direction = Vector3(1, -1, 0)
+spread = 180.0
+initial_velocity_min = 0.099999994
+initial_velocity_max = 0.29999998
+gravity = Vector3(0, 0, 0)
+scale_min = 0.099999994
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_1meta")
+color_ramp = SubResource("GradientTexture1D_1meta")
+hue_variation_min = -2.2351742e-08
+hue_variation_max = 0.09999997
+
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_2e7ox")
@@ -1191,6 +1221,13 @@ energy = 0.8
 
 [node name="Leafs" parent="." instance=ExtResource("9_wwtew")]
 position = Vector2(0, 11)
+
+[node name="Fireflies" type="GPUParticles2D" parent="."]
+scale = Vector2(7.0799994, 1.8399999)
+amount = 50
+texture = ExtResource("10_uxo23")
+lifetime = 5.0
+process_material = SubResource("ParticleProcessMaterial_jxtnq")
 
 [connection signal="no_stamina" from="stats" to="." method="_on_stats_no_stamina"]
 

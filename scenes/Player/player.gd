@@ -5,6 +5,7 @@ extends CharacterBody2D
 @onready var attackDirection = $AttackDirection
 @onready var stats = $stats
 @onready var leafs: GPUParticles2D = $Leafs
+@onready var fireflies: GPUParticles2D = $Fireflies
 
 
 enum {
@@ -196,3 +197,6 @@ func _on_stats_no_stamina() -> void:
 func steps() -> void:
 	leafs.emitting = true
 	leafs.one_shot = true
+
+func switch_fireflies(active: bool) -> void:
+	fireflies.emitting = active
