@@ -4,6 +4,8 @@ extends CharacterBody2D
 @onready var animationPlayer = $AnimationPlayer
 @onready var attackDirection = $AttackDirection
 @onready var stats = $stats
+@onready var leafs: GPUParticles2D = $Leafs
+
 
 enum {
 	MOVE,
@@ -190,3 +192,7 @@ func _on_stats_no_stamina() -> void:
 	stamina_recovery = true
 	await get_tree().create_timer(stamina_recovery_time).timeout
 	stamina_recovery = false
+	
+func steps() -> void:
+	leafs.emitting = true
+	leafs.one_shot = true

@@ -18,10 +18,11 @@ func _on_timer_timeout() -> void:
 
 func _on_time_changed(state):
 	day_state = state
-	if day_state == 0:
+	if day_state == 1:
 		light_off()
-	elif day_state == 2:
+	else:
 		light_on()
+		
 	
 	
 func light_off() -> void:

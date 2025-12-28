@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://c22p8qbiacnqq"]
+[gd_scene load_steps=27 format=4 uid="uid://c22p8qbiacnqq"]
 
 [ext_resource type="Script" uid="uid://cu4iamwrsqtly" path="res://scenes/Levels/level.gd" id="1_n6hdu"]
 [ext_resource type="PackedScene" uid="uid://khw4b1n7a3p4" path="res://scenes/Player/player.tscn" id="1_u52ul"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://deuhqeg34an1j" path="res://assets/oak_woods_v1.0/decorations/lamp.png" id="11_bg4jh"]
 [ext_resource type="Script" uid="uid://dmtrfkuljl4i1" path="res://scenes/Levels/collectibles.gd" id="12_43ksg"]
 [ext_resource type="PackedScene" uid="uid://duqw8nau73207" path="res://scenes/light/lantern.tscn" id="12_loupo"]
+[ext_resource type="Texture2D" uid="uid://dbqme1nkutr7k" path="res://assets/sprites/spotlight.png" id="14_loupo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1ainy"]
 texture = ExtResource("5_f2txt")
@@ -501,6 +502,35 @@ _data = {
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_km5ld"]
 polygon = PackedVector2Array(-5519, 599, -5520, 688, 5104, 687, 5104, 599)
 
+[sub_resource type="Gradient" id="Gradient_loupo"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.6901961)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1meta"]
+gradient = SubResource("Gradient_loupo")
+
+[sub_resource type="Curve" id="Curve_loupo"]
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(0.5075529, 0.953125), 0.0, 0.0, 0, 0, Vector2(1, 0.1328125), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_1meta"]
+curve = SubResource("Curve_loupo")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_loupo"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(100, 100, 1)
+direction = Vector3(1, -1, 0)
+spread = 180.0
+initial_velocity_min = 0.099999994
+initial_velocity_max = 0.29999998
+gravity = Vector3(0, 0, 0)
+scale_min = 0.099999994
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_1meta")
+color_ramp = SubResource("GradientTexture1D_1meta")
+hue_variation_min = -2.2351742e-08
+hue_variation_max = 0.09999997
+
 [node name="Level" type="Node2D"]
 script = ExtResource("1_n6hdu")
 
@@ -582,7 +612,7 @@ blend_mode = 1
 occluder = SubResource("OccluderPolygon2D_km5ld")
 
 [node name="ChangeTimeOfDay" type="Timer" parent="Light"]
-wait_time = 20.0
+wait_time = 10.0
 autostart = true
 
 [node name="Mobs" type="Node2D" parent="."]
@@ -593,6 +623,14 @@ autostart = true
 
 [node name="Collectibles" type="Node2D" parent="."]
 script = ExtResource("12_43ksg")
+
+[node name="Fireflies" type="GPUParticles2D" parent="."]
+position = Vector2(0, 356.00003)
+scale = Vector2(36.84, 2.3600004)
+amount = 150
+texture = ExtResource("14_loupo")
+lifetime = 5.0
+process_material = SubResource("ParticleProcessMaterial_loupo")
 
 [connection signal="pressed" from="CanvasLayer/PauseMenu/Panel/VBoxContainer/Resume" to="Manager" method="_on_resume_pressed"]
 [connection signal="pressed" from="CanvasLayer/PauseMenu/Panel/VBoxContainer/Save" to="Manager" method="_on_save_pressed"]

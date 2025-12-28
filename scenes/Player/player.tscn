@@ -1,4 +1,4 @@
-[gd_scene load_steps=104 format=3 uid="uid://khw4b1n7a3p4"]
+[gd_scene load_steps=105 format=3 uid="uid://khw4b1n7a3p4"]
 
 [ext_resource type="Script" uid="uid://dg5t8d13dbu8q" path="res://scenes/Player/player.gd" id="1_2e7ox"]
 [ext_resource type="Texture2D" uid="uid://c5db50b3660nc" path="res://assets/oak_woods_v1.0/character/char_blue.png" id="1_m50tt"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://btpdnt5semxov" path="res://scenes/Player/stats.tscn" id="7_a06cl"]
 [ext_resource type="PackedScene" uid="uid://cirgn1ntiub4d" path="res://scenes/UI/resources.tscn" id="8_dl1wr"]
 [ext_resource type="PackedScene" uid="uid://duqw8nau73207" path="res://scenes/light/lantern.tscn" id="8_wwtew"]
+[ext_resource type="PackedScene" uid="uid://cpo536m8djm5d" path="res://scenes/Player/leafs.tscn" id="9_wwtew"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1bi74"]
 
@@ -1033,6 +1034,23 @@ tracks/1/keys = {
 "update": 1,
 "values": ["Run"]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"steps"
+}, {
+"args": [],
+"method": &"steps"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_gu6f8"]
 length = 0.8
@@ -1130,9 +1148,9 @@ shape = SubResource("CapsuleShape2D_1bi74")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -13)
 sprite_frames = SubResource("SpriteFrames_m50tt")
-animation = &"Hit"
+animation = &"Run"
 autoplay = "Idle"
-frame = 3
+frame = 7
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
@@ -1170,6 +1188,9 @@ position = Vector2(17, 0)
 [node name="Lantern" parent="." instance=ExtResource("8_wwtew")]
 scale = Vector2(0.037499998, 0.037500013)
 energy = 0.8
+
+[node name="Leafs" parent="." instance=ExtResource("9_wwtew")]
+position = Vector2(0, 11)
 
 [connection signal="no_stamina" from="stats" to="." method="_on_stats_no_stamina"]
 
