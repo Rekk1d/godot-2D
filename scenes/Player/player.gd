@@ -6,6 +6,7 @@ extends CharacterBody2D
 @onready var stats = $stats
 @onready var leafs: GPUParticles2D = $Leafs
 @onready var fireflies: GPUParticles2D = $Fireflies
+@onready var smack: AudioStreamPlayer = $Sounds/Smack
 
 
 enum {
@@ -171,6 +172,7 @@ func death_state() -> void:
 	get_tree().change_scene_to_file.bind("res://scenes/Menu/menu.tscn").call_deferred()
 	
 func _on_take_damage(enemy_damage: int) -> void:
+	smack.play()
 	if state == BLOCK:
 		enemy_damage /= 2
 	elif state == SLIDE:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://c22p8qbiacnqq"]
+[gd_scene load_steps=22 format=4 uid="uid://c22p8qbiacnqq"]
 
 [ext_resource type="Script" uid="uid://cu4iamwrsqtly" path="res://scenes/Levels/level.gd" id="1_n6hdu"]
 [ext_resource type="PackedScene" uid="uid://khw4b1n7a3p4" path="res://scenes/Player/player.tscn" id="1_u52ul"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://deuhqeg34an1j" path="res://assets/oak_woods_v1.0/decorations/lamp.png" id="11_bg4jh"]
 [ext_resource type="Script" uid="uid://dmtrfkuljl4i1" path="res://scenes/Levels/collectibles.gd" id="12_43ksg"]
 [ext_resource type="PackedScene" uid="uid://duqw8nau73207" path="res://scenes/light/lantern.tscn" id="12_loupo"]
+[ext_resource type="AudioStream" uid="uid://1klmrq255415" path="res://assets/music/cloud-of-sorrow-13984.mp3" id="14_loupo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1ainy"]
 texture = ExtResource("5_f2txt")
@@ -593,6 +594,11 @@ autostart = true
 
 [node name="Collectibles" type="Node2D" parent="."]
 script = ExtResource("12_43ksg")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_loupo")
+volume_db = -30.0
+autoplay = true
 
 [connection signal="pressed" from="CanvasLayer/PauseMenu/Panel/VBoxContainer/Resume" to="Manager" method="_on_resume_pressed"]
 [connection signal="pressed" from="CanvasLayer/PauseMenu/Panel/VBoxContainer/Save" to="Manager" method="_on_save_pressed"]
