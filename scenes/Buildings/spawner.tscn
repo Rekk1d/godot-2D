@@ -1,0 +1,130 @@
+[gd_scene load_steps=18 format=3 uid="uid://cx614o5v2272l"]
+
+[ext_resource type="Texture2D" uid="uid://irjbo7y4l16b" path="res://assets/sprites/Obelisk_effects.png" id="1_x3vrk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t5v01"]
+atlas = ExtResource("1_x3vrk")
+region = Rect2(0, 0, 190, 380)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tgo33"]
+atlas = ExtResource("1_x3vrk")
+region = Rect2(0, 0, 190, 380)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yupkt"]
+atlas = ExtResource("1_x3vrk")
+region = Rect2(190, 0, 190, 380)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aewew"]
+atlas = ExtResource("1_x3vrk")
+region = Rect2(380, 0, 190, 380)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fgi7f"]
+atlas = ExtResource("1_x3vrk")
+region = Rect2(570, 0, 190, 380)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kigmq"]
+atlas = ExtResource("1_x3vrk")
+region = Rect2(760, 0, 190, 380)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pbtjp"]
+atlas = ExtResource("1_x3vrk")
+region = Rect2(950, 0, 190, 380)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j26mp"]
+atlas = ExtResource("1_x3vrk")
+region = Rect2(1140, 0, 190, 380)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4wup2"]
+atlas = ExtResource("1_x3vrk")
+region = Rect2(1330, 0, 190, 380)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vgw7w"]
+atlas = ExtResource("1_x3vrk")
+region = Rect2(1520, 0, 190, 380)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t6yje"]
+atlas = ExtResource("1_x3vrk")
+region = Rect2(1710, 0, 190, 380)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ccn8b"]
+atlas = ExtResource("1_x3vrk")
+region = Rect2(1900, 0, 190, 380)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ikgqq"]
+atlas = ExtResource("1_x3vrk")
+region = Rect2(2090, 0, 190, 380)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p2ufw"]
+atlas = ExtResource("1_x3vrk")
+region = Rect2(2280, 0, 190, 380)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pbpde"]
+atlas = ExtResource("1_x3vrk")
+region = Rect2(2470, 0, 190, 380)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6ow01"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t5v01")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tgo33")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yupkt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aewew")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fgi7f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kigmq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pbtjp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j26mp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4wup2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vgw7w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t6yje")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ccn8b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ikgqq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p2ufw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pbpde")
+}],
+"loop": false,
+"name": &"Spawn",
+"speed": 10.0
+}]
+
+[node name="Spawner" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_6ow01")
+animation = &"Spawn"
+autoplay = "Idle"
+frame = 13
+frame_progress = 1.0

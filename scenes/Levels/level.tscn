@@ -599,11 +599,14 @@ script = ExtResource("12_43ksg")
 stream = ExtResource("14_loupo")
 volume_db = -30.0
 autoplay = true
+bus = &"Music"
 
-[connection signal="pressed" from="CanvasLayer/PauseMenu/Panel/VBoxContainer/Resume" to="Manager" method="_on_resume_pressed"]
-[connection signal="pressed" from="CanvasLayer/PauseMenu/Panel/VBoxContainer/Save" to="Manager" method="_on_save_pressed"]
-[connection signal="pressed" from="CanvasLayer/PauseMenu/Panel/VBoxContainer/Load" to="Manager" method="_on_load_pressed"]
-[connection signal="pressed" from="CanvasLayer/PauseMenu/Panel/VBoxContainer/Quit" to="Manager" method="_on_quit_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/Menu/MenuContainer/Resume" to="Manager" method="_on_resume_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/Menu/MenuContainer/Save" to="Manager" method="_on_save_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/Menu/MenuContainer/Load" to="Manager" method="_on_load_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/Menu/MenuContainer/Settings" to="Manager" method="_on_settings_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/Menu/MenuContainer/Quit" to="Manager" method="_on_quit_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/Options/OptionsContainer/BackButton" to="Manager" method="_on_back_button_pressed"]
 [connection signal="timeout" from="Light/ChangeTimeOfDay" to="." method="_on_change_time_of_day_timeout"]
 [connection signal="timeout" from="Mobs/MobsSpawner" to="." method="_on_mobs_spawner_timeout"]
 

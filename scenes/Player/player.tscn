@@ -1294,15 +1294,13 @@ collision_layer = 2
 script = ExtResource("1_2e7ox")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("CapsuleShape2D_1bi74")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -13)
 sprite_frames = SubResource("SpriteFrames_m50tt")
-animation = &"Hit"
+animation = &"Attack"
 autoplay = "Idle"
-frame = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)

@@ -183,9 +183,6 @@ func _on_take_damage(enemy_damage: int) -> void:
 	if stats.health  <= 0:
 		stats.health  = 0
 		state = DEATH
-	
-	#emit_signal("health_change", Global.player_health)
-
 
 func _on_hit_box_area_entered(area: Area2D) -> void:
 	Signals.emit_signal("player_attack", Global.player_damage)

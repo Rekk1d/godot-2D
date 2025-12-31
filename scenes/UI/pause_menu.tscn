@@ -1,4 +1,18 @@
-[gd_scene format=3 uid="uid://dhku0sonx0t18"]
+[gd_scene load_steps=5 format=3 uid="uid://dhku0sonx0t18"]
+
+[ext_resource type="Script" uid="uid://2jtxfw42jstk" path="res://scenes/UI/audio_control.gd" id="1_qo2fb"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_txrub"]
+color = Color(1, 1, 1, 1)
+thickness = 6
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_qo2fb"]
+color = Color(0.23802051, 0.3776158, 0.9013357, 1)
+thickness = 6
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_bl585"]
+color = Color(0.23921569, 0.3764706, 0.9019608, 1)
+thickness = 6
 
 [node name="PauseMenu" type="Control"]
 layout_mode = 3
@@ -8,7 +22,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Menu" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -22,7 +36,7 @@ offset_bottom = 119.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+[node name="MenuContainer" type="VBoxContainer" parent="Menu"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -30,29 +44,91 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -100.0
-offset_top = -72.0
+offset_top = -98.5
 offset_right = 100.0
-offset_bottom = 72.0
+offset_bottom = 99.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="Panel/VBoxContainer"]
+[node name="Title" type="Label" parent="Menu/MenuContainer"]
 layout_mode = 2
 text = "MENU"
 horizontal_alignment = 1
 
-[node name="Resume" type="Button" parent="Panel/VBoxContainer"]
+[node name="Resume" type="Button" parent="Menu/MenuContainer"]
 layout_mode = 2
 text = "Resume"
 
-[node name="Save" type="Button" parent="Panel/VBoxContainer"]
+[node name="Save" type="Button" parent="Menu/MenuContainer"]
 layout_mode = 2
 text = "Save"
 
-[node name="Load" type="Button" parent="Panel/VBoxContainer"]
+[node name="Load" type="Button" parent="Menu/MenuContainer"]
 layout_mode = 2
 text = "Load"
 
-[node name="Quit" type="Button" parent="Panel/VBoxContainer"]
+[node name="Settings" type="Button" parent="Menu/MenuContainer"]
+layout_mode = 2
+text = "Settings"
+
+[node name="Quit" type="Button" parent="Menu/MenuContainer"]
 layout_mode = 2
 text = "Quit"
+
+[node name="Options" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -112.0
+offset_top = -156.0
+offset_right = 132.0
+offset_bottom = 119.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OptionsContainer" type="VBoxContainer" parent="Options"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.5
+offset_top = -103.5
+offset_right = 96.5
+offset_bottom = 103.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Title" type="Label" parent="Options/OptionsContainer"]
+layout_mode = 2
+text = "OPTIONS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Volume" type="Label" parent="Options/OptionsContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Music"
+
+[node name="AudioControl" type="HSlider" parent="Options/OptionsContainer"]
+layout_mode = 2
+theme_override_styles/slider = SubResource("StyleBoxLine_txrub")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_qo2fb")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_bl585")
+min_value = -40.0
+max_value = 0.0
+script = ExtResource("1_qo2fb")
+audio_bus_name = "Music"
+
+[node name="BackButton" type="Button" parent="Options/OptionsContainer"]
+layout_mode = 2
+text = "Back
+"
+
+[connection signal="value_changed" from="Options/OptionsContainer/AudioControl" to="Options/OptionsContainer/AudioControl" method="_on_value_changed"]

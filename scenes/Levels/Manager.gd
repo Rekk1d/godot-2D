@@ -1,11 +1,14 @@
 extends Node
-
-@onready var pause_menu = $"../CanvasLayer/PauseMenu"
 @onready var player: CharacterBody2D = $"../Player/Player"
+@onready var pause_menu: Control = $"../CanvasLayer/PauseMenu"
+@onready var options: Panel = $"../CanvasLayer/PauseMenu/Options"
 
 var is_game_on_pause: bool = false
 var save_path = "user://savegame.save"
 
+func _ready() -> void:
+	options.visible = false
+	
 func _process(_delta) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
 		is_game_on_pause = !is_game_on_pause
@@ -44,3 +47,13 @@ func _on_save_pressed() -> void:
 func _on_load_pressed() -> void:
 	load_game()
 	is_game_on_pause = !is_game_on_pause
+
+
+func _on_settings_pressed() -> void:
+	pause_menu.hide()
+	options.show()
+
+
+func _on_back_button_pressed() -> void:
+	pause_menu.show()
+	options.hide()
